@@ -1,8 +1,9 @@
 package testtypes
 
-import box.Factory
+import box.FactoryBuddy
 
 case class Person private(name: String, age: Int)
-object Person {
-  given Factory.Aux[(String, Int), Person] = Factory.instance(x => Some(apply.tupled(x)), x => (x.name, x.age))
+object Person extends FactoryBuddy[(String, Int), Person] {
+  def getValue(b: Person): (String, Int) = (b.name, b.age)
+  def apply(t: (String, Int)): Option[Person] = Some(Person(t._1, t._2))
 }

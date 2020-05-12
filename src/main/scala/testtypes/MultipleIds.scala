@@ -1,15 +1,19 @@
 package testtypes
 
-import box.FactoryCompanionDefineCstr
+import box.FactoryBuddyIdentity
 
 opaque type UserId = Int
-object UserId extends FactoryCompanionDefineCstr[Int, UserId]({
-    case i if i >= 0 => Some(i)
+object UserId extends FactoryBuddyIdentity[Int, UserId] {
+  override def apply(i: Int): Option[UserId] = i match {
+    case _ if i >= 0 => Some(i)
     case _ => None
-})
+  }
+}
 
 opaque type BookId = Int
-object BookId extends FactoryCompanionDefineCstr[Int, BookId]({
-  case i if i >= 0 && i <= 100 => Some(i)
-  case _ => None
-})
+object BookId extends FactoryBuddyIdentity[Int, BookId] {
+  override def apply(i: Int): Option[BookId] = i match {
+    case _ if i >= 0 && i <= 100 => Some(i)
+    case _ => None
+  }
+}

@@ -1,12 +1,9 @@
 package testtypes
 
-import box.Factory
-import box.FactoryCompanion
-import box.FactoryCompanionOf
+import box.FactoryBuddyIdentity
 
 opaque type OpaqueName = String
-object OpaqueName extends FactoryCompanionOf[String, OpaqueName]
+object OpaqueName extends FactoryBuddyIdentity[String, OpaqueName]
 
-/*{
-  given Factory.Aux[String, OpaqueName] = Factory.of[OpaqueName]
-}*/
+opaque type OtherName = String
+object OtherName extends FactoryBuddyIdentity[String, OtherName]

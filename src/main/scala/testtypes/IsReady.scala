@@ -1,6 +1,6 @@
 package testtypes
 
-import box.FactoryCompanionOf
+import box.FactoryBuddyIdentity
 
 opaque type IsReady = Boolean
-object IsReady extends FactoryCompanionOf[Boolean, IsReady]
+object IsReady extends FactoryBuddyIdentity[Boolean, IsReady]

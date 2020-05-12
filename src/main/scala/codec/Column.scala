@@ -1,6 +1,4 @@
 package codec
-import box.Factory
-import box.Factory.{given _}
 
 trait DatabaseColumn[T] {
   def name(t: T): String

@@ -1,18 +1,17 @@
 import codec.Codec
 import codec.Codec.{given _}
-import box.Factory
-import box.Factory.{given _, _}
-import codec.FactoryCodec.{given _}
+import codec.FactoryCodec.{given _, _}
 import codec.{DatabaseColumn, BaseColumnType, mappedColumn, MappedColumn}
 import scala.util.Try
 import codec.FactoryColumn.{given _}
 import testtypes._
-import testtypes.Pet.{given _}
+import scala.runtime.{Tuple, EnumValues}
+import box.{given _}
 
 object Main {
 
   def main(args: Array[String]): Unit = {
-    println("Hello world!")
+    /*println("Hello world!")
   
     val i = 42
 
@@ -95,10 +94,110 @@ object Main {
       case _ => println("other")
     }
 
-    println(EnumPet.Dog.toString)
+    println(EnumPet.Dog.toString)*/
 
-    DeviceId(1).get match {
+    /*DeviceId(1).get match {
       case DeviceId(i) => println(i)
+    }*/
+
+    /*println(summon[Codec[DeviceId]].write(summon[Codec[DeviceId]].read("41")))
+    val x = summon[BoxFact[Int, DeviceId]].create(1).valueOfBox
+
+    val deviceId: DeviceId = 42.toBox[DeviceId].get
+    val userId: UserId = 42.toBox[UserId].get
+    
+    val name1: OpaqueName = "name".toBox[OpaqueName].get
+    val name2: OtherName = "name".toBox[OtherName].get
+
+    println(name1.hashCode)
+    println(name2.hashCode)
+
+    val ids: Seq[DeviceId] = Seq(deviceId, deviceId, 0.toBox[DeviceId].get)
+    //ids.sorted
+
+    println(ids.sorted)
+    println(Seq(1.toBox[UserId].get, 50.toBox[UserId].get, 11.toBox[UserId].get).sorted)
+    println(Seq("it's".toBox[OpaqueName].get, "hello".toBox[OpaqueName].get, "me".toBox[OpaqueName].get).sorted)
+
+    val ud: Map[UserId | DeviceId, String] = Map()
+    val ud1 = ud + (1.toBox[DeviceId].get -> "DeviceName")
+    val ud2 = ud1 + (2.toBox[UserId].get -> "UserName")
+    val ud3 = ud2 + (1.toBox[UserId].get -> "UserName")
+    println(ud3)
+
+    type Concat[Xs <: Tuple, +Ys <: Tuple] <: Tuple = Xs match {
+      case Unit => Ys
+      case x *: xs => x *: Concat[xs, Ys]
     }
+
+    println(Tuple.concat((1, 2), ("h", true)))
+    val petEnumVals = EnumValues[EnumPet]
+    println(petEnumVals.fromName)
+
+    val phoneId = PhoneId(10)
+    
+    phoneId match {
+      case Some(PhoneId(i)) =>
+      case None => 
+
+      //case None => println("No phone id created")
+    }
+
+    case class A(i: Int)
+    Option(A(1)) match {
+      case Some(A(i)) => println("as")
+      case None => println("asdasd")
+    }
+
+    println(EnumPet("catt"))
+
+    EnumPet("catt").get match {
+      case EnumPet.Cat => println("cat")
+      case EnumPet.Unsupported(s) => println(s"unsupported pet $s")
+      case other => println(s"other pet $other")
+      case str => println(s"no pet $str")
+    }
+
+    println(OpPet("dogs"))
+
+    println("dog".toBox[Pet])
+
+    //println(deviceId == userId)
+/*
+    case class SameId1(id: Int)
+    case class SameId2(id: Int)
+    println(SameId1(101).hashCode)
+    println(SameId2(101).hashCode)
+*/    
+    //val devCodec: Codec[DeviceId] = boxFactCodec[Int, DeviceId]
+    //println(devCodec.write(devCodec.read("1")))*/
+
+    println(PhoneId(1))
+    println(Codec[PhoneId].read("1"))
+    println("3".convertTo[PhoneId].writeString)
+    PhoneId(1) match {
+      case Some(PhoneId(10)) => println("ten")
+      case Some(PhoneId(1)) => println("one")
+      case Some(PhoneId(i)) => println(i)
+      case None => println("none")
+    }
+
+    PhoneId(10).get match {
+      case PhoneId(10) => println("ten")
+      case PhoneId(1) => println("one")
+      case PhoneId(i) => println(i)
+    }
+
+    println(summon[BaseColumnType[PhoneId]].name(PhoneId(42).get))
+    println(summon[DatabaseColumn[PhoneId]].name(PhoneId(42).get))
+
+    println("caT".convertTo[EnumPet])
+
+    println(1.toBox[DeviceId].map(_.value))
+    println(52.toBox[DeviceId].get.value)
+    println(UserId(71))
+    println(EnumPet("dog"))
+    
+    Seq(1).map(_ * 2)
   }
 }
