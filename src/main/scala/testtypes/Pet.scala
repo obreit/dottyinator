@@ -7,6 +7,17 @@ enum EnumPet(val str: String) {
   case Dog extends EnumPet("dog")
   case Mouse extends EnumPet("mouse")
   case Unsupported(s: String) extends EnumPet(s)
+
+  /*
+    Simple cases (without parameters) don't override the toString method!
+    I.e. 
+    Unsupported("abc").toString -> "abc"
+    Cat.toString -> "Cat" <-- will always be the name of the enum. 
+    
+    This issue is being discussed and tracked
+    https://github.com/lampepfl/dotty/issues/7227 
+  */
+  override def toString(): String = str
 }
 object EnumPet extends EnumBuddy[String, EnumPet] {
   override def default(s: String): Option[EnumPet] = Some(Unsupported(s))
